@@ -13,18 +13,33 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const {setShowSearch, cart: cartData} = useProductStore();
+
+  // Function to calculate total cart count
+  const getCartCount = () => {
+    if (!cartData || Object.keys(cartData).length === 0) return 0;
+    
+    let totalCount = 0;
+    Object.values(cartData).forEach(item => {
+      Object.values(item).forEach(count => {
+        totalCount += count;
+      });
+    });
+    return totalCount;
+  };
+
   // Function to handle dropdown toggle on mobile
   const handleDropdownToggle = () => {
     setDropdownOpen((prev) => !prev);
   };
-
-  const {setShowSearch} = useProductStore();
 
   // Function to close menu when a link is clicked (mobile UX)
   const handleLinkClick = () => {
     setMenuOpen(false);
     setDropdownOpen(false);
   };
+
+  const cartCount = getCartCount();
 
   return (
     <div className='flex items-center justify-between py-5 font-medium relative'>
@@ -85,7 +100,7 @@ const Navbar = () => {
           </div>
           <Link to='/cart' className='relative'>
             <img src={cart} alt="Cart" className='w-5 cursor-pointer' />
-            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 text-white bg-black aspect-square rounded-full text-[8px]'>10</p>
+            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 text-white bg-black aspect-square rounded-full text-[8px]'>{cartCount}</p>
           </Link>
         </div>
       </ul>
@@ -109,7 +124,7 @@ const Navbar = () => {
         </div>
         <Link to='/cart' className='relative'>
           <img src={cart} alt="Cart" className='w-5 cursor-pointer' />
-          <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 text-white bg-black aspect-square rounded-full text-[8px]'>10</p>
+          <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 text-white bg-black aspect-square rounded-full text-[8px]'>{cartCount}</p>
         </Link>
       </div>
       {/* Overlay for mobile menu */}

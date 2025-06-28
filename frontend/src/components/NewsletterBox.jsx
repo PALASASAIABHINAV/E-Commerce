@@ -1,10 +1,15 @@
 import React from 'react'
+import { toast } from 'react-toastify';
 
 const NewsletterBox = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target.email.value);
+        const email = e.target.email.value;
+        if(!email){
+            toast.error("Please enter your email");
+            return;
+        }
     }
 
   return (

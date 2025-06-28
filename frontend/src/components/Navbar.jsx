@@ -7,6 +7,7 @@ import cart from '../assets/frontend_assets/cart_icon.png'
 import menu from '../assets/frontend_assets/menu_icon.png'
 import cross from '../assets/frontend_assets/cross_icon.png'
 import dropdown from '../assets/frontend_assets/dropdown_icon.png'
+import useProductStore from '../store/ShopContext';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +17,8 @@ const Navbar = () => {
   const handleDropdownToggle = () => {
     setDropdownOpen((prev) => !prev);
   };
+
+  const {setShowSearch} = useProductStore();
 
   // Function to close menu when a link is clicked (mobile UX)
   const handleLinkClick = () => {
@@ -63,7 +66,7 @@ const Navbar = () => {
         <NavLink to='/about' onClick={handleLinkClick} className='block'>About</NavLink>
         <NavLink to='/contact' onClick={handleLinkClick} className='block'>Contact</NavLink>
         <div className='flex gap-6 mt-8'>
-          <img src={search} alt="Search" className='w-5 cursor-pointer' />
+          <img onClick={()=>setShowSearch(true)} src={search} alt="Search" className='w-5 cursor-pointer' />
           <div className='relative'>
             <img
               src={user}
@@ -89,7 +92,7 @@ const Navbar = () => {
 
       {/* Desktop Icons */}
       <div className='hidden sm:flex items-center gap-6'>
-        <img src={search} alt="Search" className='w-5 cursor-pointer' />
+        <img onClick={()=>setShowSearch(true)} src={search} alt="Search" className='w-5 cursor-pointer' />
         <div className='group relative'>
           <img
             src={user}
